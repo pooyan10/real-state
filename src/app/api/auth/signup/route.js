@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import User from "@/models/User";
 import connectDB from "@/utils/connectDB";
 import { hashPassword } from "@/utils/auth";
+import RealStateUser from "@/models/Realstateuser";
 
 export async function POST(req) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req) {
         { status: 422 }
       );
     }
-    const existingUser = await User.findOne({ email: email });
+    const existingUser = await RealStateUser.findOne({ email: email });
     if (existingUser) {
       return NextResponse.json(
         { error: "این حساب کاربری وجود دارد" },
@@ -25,7 +25,7 @@ export async function POST(req) {
 
     const hashedPassword = await hashPassword(password);
 
-    const newUser = await User.create({
+    const newUser = await RealStateUser.create({
       email: email,
       password: hashedPassword,
     });

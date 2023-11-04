@@ -1,5 +1,5 @@
 import Profile from "@/models/Profile";
-import User from "@/models/User";
+import RealStateUser from "@/models/Realstateuser";
 import connectDB from "@/utils/connectDB";
 import { Types } from "mongoose";
 import { getServerSession } from "next-auth";
@@ -30,7 +30,8 @@ export async function POST(req) {
       );
     }
 
-    const user = User.findOne({ email: session.user.email });
+    const user = RealStateUser.findOne({ email: session.user.email });
+
     if (!user) {
       return NextResponse.json(
         { error: "حساب کاربری شما یافت نشد" },
@@ -38,6 +39,8 @@ export async function POST(req) {
           status: 404,
         }
       );
+    } else {
+      console.log(new Types.ObjectId(user._id));
     }
 
     if (
@@ -69,7 +72,75 @@ export async function POST(req) {
       amenities,
       userId: new Types.ObjectId(user._id),
     });
-    return NextResponse.json({ message: "آگهی ایجاد شد" }, { status: 201 });
+    console.log(newProfile);
+
+    return NextResponse.json(
+      { message: "آگهی جدید ایجاد شد" },
+      { status: 201 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { error: "مشکلی در سرور  رخ  داده است" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH() {
+  try {
+    await connectDB();
+
+    const {
+      _id,
+      title,
+      description,
+      location,
+      phone,
+      price,
+      realState,
+      constructionDate,
+      category,
+      rules,
+      amenities,
+    } = await req.json();
+
+    const session = await getServerSession(req);
+    if (!session) {
+      return NextResponse.json(
+        { error: "لطفا وارد حساب کاربری شوید" },
+        { status: 401 }
+      );
+    }
+
+    const user = RealStateUser.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json(
+        { error: "حساب کاربری شما یافت نشد" },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    if (
+      !_id ||
+      !title ||
+      !description ||
+      !location ||
+      !phone ||
+      !price ||
+      !realState ||
+      !constructionDate ||
+      !category
+    ) {
+      return NextResponse.json(
+        { error: "اطلاعات را کامل وارد کنید" },
+        { status: 400 }
+      );
+    }
+
+    const profile = await Profile.findOne({ _id });
   } catch (err) {
     console.log(err);
     return NextResponse.json(
