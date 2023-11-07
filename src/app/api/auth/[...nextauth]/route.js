@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
-import RealStateUser from "@/models/Realstateuser";
+import RealStateUser from "@/models/RealStateUser";
 
 export const authOptions = {
   session: { strategy: "jwt" },

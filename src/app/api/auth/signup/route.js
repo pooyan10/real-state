@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/utils/connectDB";
 import { hashPassword } from "@/utils/auth";
-import RealStateUser from "@/models/Realstateuser";
+import RealStateUser from "@/models/RealStateUser";
 
 export async function POST(req) {
   try {

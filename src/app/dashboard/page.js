@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import connectDB from "@/utils/connectDB";
-import RealStateUser from "@/models/Realstateuser";
+import RealStateUser from "@/models/RealStateUser";
 
 async function Dashboard() {
   await connectDB();

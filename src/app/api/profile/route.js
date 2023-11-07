@@ -1,5 +1,5 @@
 import Profile from "@/models/Profile";
-import RealStateUser from "@/models/Realstateuser";
+import RealStateUser from "@/models/RealStateUser";
 import connectDB from "@/utils/connectDB";
 import { Types } from "mongoose";
 import { getServerSession } from "next-auth";
@@ -39,8 +39,6 @@ export async function POST(req) {
           status: 404,
         }
       );
-    } else {
-      console.log(new Types.ObjectId(user._id));
     }
 
     if (
@@ -87,7 +85,7 @@ export async function POST(req) {
   }
 }
 
-export async function PATCH() {
+export async function PATCH(req) {
   try {
     await connectDB();
 
@@ -97,55 +95,100 @@ export async function PATCH() {
       description,
       location,
       phone,
-      price,
       realState,
+      price,
       constructionDate,
       category,
-      rules,
       amenities,
+      rules,
     } = await req.json();
 
     const session = await getServerSession(req);
     if (!session) {
       return NextResponse.json(
-        { error: "لطفا وارد حساب کاربری شوید" },
+        {
+          error: "لطفا وارد حساب کاربری خود شوید",
+        },
         { status: 401 }
       );
     }
 
-    const user = RealStateUser.findOne({ email: session.user.email });
+    const user = await RealStateUser.findOne({ email: session.user.email });
     if (!user) {
       return NextResponse.json(
-        { error: "حساب کاربری شما یافت نشد" },
-        {
-          status: 404,
-        }
+        { error: "حساب کاربری یافت نشد" },
+        { status: 404 }
       );
     }
 
     if (
       !_id ||
       !title ||
-      !description ||
       !location ||
+      !description ||
       !phone ||
-      !price ||
       !realState ||
+      !price ||
       !constructionDate ||
       !category
     ) {
       return NextResponse.json(
-        { error: "اطلاعات را کامل وارد کنید" },
+        { error: "لطفا اطلاعات معتبر وارد کنید" },
         { status: 400 }
       );
     }
 
     const profile = await Profile.findOne({ _id });
+
+    if (!user._id.equals(profile.userId)) {
+      return NextResponse.json(
+        {
+          error: "دستری شما به این آگهی محدود شده است",
+        },
+        { status: 403 }
+      );
+    }
+
+    profile.title = title;
+    profile.description = description;
+    profile.location = location;
+    profile.phone = phone;
+    profile.realState = realState;
+    profile.price = price;
+    profile.constructionDate = constructionDate;
+    profile.amenities = amenities;
+    profile.rules = rules;
+    profile.category = category;
+    profile.save();
+
+    return NextResponse.json(
+      {
+        message: "آگهی با موفقیت ویرایش شد",
+      },
+      {
+        status: 200,
+      }
+    );
   } catch (err) {
     console.log(err);
     return NextResponse.json(
-      { error: "مشکلی در سرور  رخ  داده است" },
+      { error: "مشکلی در سرور رخ داده است" },
       { status: 500 }
     );
   }
 }
+
+// export async function GET() {
+//   try {
+//     await connectDB();
+
+//     const profiles = await Profile.find().select("-userId");
+//     return NextResponse.json({ data: profiles }, { status: 200 });
+//   } catch (err) {
+//     console.log(err);
+//     return NextResponse.json(
+//       { error: "مشکلی در سرور رخ داده است" },
+//       { status: 500 }
+//     );
+//   }
+// }

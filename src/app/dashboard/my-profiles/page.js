@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import MyProfilesPage from "@/components/template/MyProfilesPage";
-import RealStateUser from "@/models/Realstateuser";
+import RealStateUser from "@/models/RealStateUser";
 import connectDB from "@/utils/connectDB";
 import { getServerSession } from "next-auth";
 

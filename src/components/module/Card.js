@@ -1,22 +1,12 @@
-import { RiHome3Line } from "react-icons/ri";
-import { MdApartment } from "react-icons/md";
-import { BiStore } from "react-icons/bi";
-import { GiOfficeChair } from "react-icons/gi";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { sp } from "@/utils/replaceNumber";
 import Link from "next/link";
+import { icons } from "@/constants/icons";
 
-function Card({ data: { category, title, location, price } }) {
-  const icons = {
-    villa: <RiHome3Line />,
-    apartment: <MdApartment />,
-    store: <BiStore />,
-    office: <GiOfficeChair />,
-  };
-
+function Card({ data: { _id, category, title, location, price } }) {
   return (
-    <div className="border w-[40%] rounded-md border-blue1/40 ">
+    <div className="border p-5 sm:min-w-[200px] sm:max-w-[250px] w-full sm rounded-md border-blue1/40 ">
       <div className="p-1 bg-blue1/30 rounded-md w-fit m-2">
         {icons[category]}
       </div>
@@ -28,7 +18,7 @@ function Card({ data: { category, title, location, price } }) {
       <span className="pr-2">{sp(price)} تومان </span>
       <br />
       <Link
-        href="/"
+        href={`/buy-residential/${_id}`}
         className="px-2 flex justify-between gap-1 text-blue1 items-center mb-2 mt-4"
       >
         مشاهده آگهی

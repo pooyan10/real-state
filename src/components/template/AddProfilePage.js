@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextInput from "../module/TextInput";
 import RadioList from "../module/RadioList";
 import TextList from "../module/TextList";
 import CustomDatePicker from "../module/CustomDatePicker";
 import toast, { Toaster } from "react-hot-toast";
-import { BeatLoader } from "react-spinners";
 import Loader from "../module/Loader";
+import { useRouter } from "next/navigation";
 
-function AddProfilePage() {
+function AddProfilePage({ data }) {
   const [profileData, setProfileData] = useState({
     title: "",
     description: "",
@@ -24,6 +24,12 @@ function AddProfilePage() {
   });
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    data && setProfileData(data);
+  }, []);
+
+  const router = useRouter();
+
   const submitHandler = async () => {
     setLoading(true);
     const res = await fetch("/api/profile", {
@@ -37,13 +43,32 @@ function AddProfilePage() {
       toast.error(data.error);
     } else {
       toast.success(data.message);
+      router.refresh();
+    }
+  };
+
+  const editHandler = async () => {
+    setLoading(true);
+    const res = await fetch("/api/profile", {
+      method: "PATCH",
+      body: JSON.stringify(profileData),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    setLoading(false);
+    if (data.error) {
+      toast.error(data.error);
+    } else {
+      toast.success(data.message);
+      router.refresh();
+      router.push("/dashboard/my-profiles");
     }
   };
 
   return (
     <div className="p-4">
       <h3 className="bg-blue-100 text-blue1 mb-12 font-bold p-2 rounded-md ">
-        ثبت آگهی
+        {data ? "ویرایش آگهی" : "ثبت آگهی"}
       </h3>
 
       <TextInput
@@ -106,6 +131,13 @@ function AddProfilePage() {
         <div className="flex justify-center w-full mt-12">
           <Loader />
         </div>
+      ) : data ? (
+        <button
+          className="px-4 w-full py-1 mt-12 hover:scale-105 focus:ring bg-blue1 rounded-md text-white"
+          onClick={editHandler}
+        >
+          ویرایش آگهی
+        </button>
       ) : (
         <button
           className="px-4 w-full py-1 mt-12 hover:scale-105 focus:ring bg-blue1 rounded-md text-white"
