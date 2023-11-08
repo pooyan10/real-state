@@ -36,6 +36,14 @@ export async function DELETE(req, context) {
     //   );
     // }
 
+    if (user.role === "ADMIN") {
+      await Profile.deleteOne({ _id: id });
+      return NextResponse.json(
+        { message: "آگهی مورد نظر حذف شد" },
+        { status: 200 }
+      );
+    }
+
     await Profile.deleteOne({ _id: id });
     return NextResponse.json(
       { message: "آگهی مورد نظر حذف شد" },

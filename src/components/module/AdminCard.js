@@ -3,6 +3,7 @@
 import { sp } from "@/utils/replaceNumber";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import { AiOutlineDelete } from "react-icons/ai";
 
 function AdminCard({ data: { _id, title, description, location, price } }) {
   const router = useRouter();
@@ -12,6 +13,17 @@ function AdminCard({ data: { _id, title, description, location, price } }) {
     const result = await res.json();
     if (result.message) {
       toast.success(result.message);
+      router.refresh();
+    }
+  };
+
+  const deleteHandler = async () => {
+    const res = await fetch(`/api/profile/delete/${_id}`, {
+      method: "DELETE",
+    });
+    const result = await res.json();
+    if (result.message) {
+      toast.error(result.message);
       router.refresh();
     }
   };
@@ -28,12 +40,22 @@ function AdminCard({ data: { _id, title, description, location, price } }) {
           {sp(price)}
         </span>
       </div>
-      <button
-        className="bg-green-500 px-2 py-1 rounded-md text-white hover:text-green-800 hover:shadow-3xl shadow-green-800"
-        onClick={publishHandler}
-      >
-        انتشار
-      </button>
+      <div className="flex gap-5 justify-between">
+        <button
+          className="bg-green-500 px-2 py-1 rounded-md text-white hover:text-green-800 hover:shadow-3xl shadow-green-800"
+          onClick={publishHandler}
+        >
+          انتشار
+        </button>
+        <button
+          className="flex items-center gap-1 bg-red-500 px-2 py-1 rounded-md text-white hover:text-red-800 hover:shadow-3xl shadow-red-800"
+          onClick={deleteHandler}
+        >
+          حذف
+          <AiOutlineDelete />
+        </button>
+      </div>
+
       <div className="bg-blue1 h-[1px] mt-5 rounded-full"></div>
       <Toaster />
     </div>
