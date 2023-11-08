@@ -12,7 +12,7 @@ async function BuyResidential(props) {
   // const data = await res.json();
 
   await connectDB();
-  const profiles = await Profile.find().select("-userId");
+  const profiles = await Profile.find({ published: true }).select("-userId");
   let finalData = profiles;
   if (searchParams.category) {
     finalData = finalData.filter((i) => i.category === searchParams.category);

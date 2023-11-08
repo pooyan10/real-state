@@ -24,7 +24,7 @@ function DetailsPage({
   },
 }) {
   return (
-    <div className="flex flex-col sm:grid sm:grid-cols-12 h-screen ">
+    <div className="flex flex-col overflow-y-scroll sm:grid sm:grid-cols-12 h-screen ">
       <div className="md:col-span-9 px-4 sm:px-8 sm:col-span-8">
         <h1 className="font-bold text-xl mt-8 mb-2 text-blue1 ">{title}</h1>
         <span className="text-gray-600 flex gap-1 items-center mb-10">
