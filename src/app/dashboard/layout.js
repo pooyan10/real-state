@@ -5,6 +5,10 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import RealStateUser from "@/models/RealStateUser";
 import connectDB from "@/utils/connectDB";
 
+export const metadata = {
+  title: " پنل کاربری املاک | ایران ملک",
+};
+
 async function DashboardLayout({ children }) {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/signin");

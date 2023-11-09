@@ -7,6 +7,10 @@ import DashboardSidebar from "@/components/layout/DashboardSidebar";
 import AdminPage from "@/components/template/AdminPage";
 import Profile from "@/models/Profile";
 
+export const metadata = {
+  title: " پنل ادمین املاک | ایران ملک",
+};
+
 async function Admin() {
   await connectDB();
   const session = await getServerSession(authOptions);
