@@ -44,6 +44,7 @@ function AddProfilePage({ data }) {
     } else {
       toast.success(data.message);
       router.refresh();
+      router.push("/dashboard/my-profiles");
     }
   };
 

@@ -21,6 +21,7 @@ function HomePage() {
           ))}
         </ul>
       </div>
+
       <div className="grid grid-cols-2 justify-center items-center flex-col gap-5 sm:flex sm:flex-row mt-24">
         <CategoryCard title="خانه ویلایی" name="villa" />
         <CategoryCard title="آپارتمان " name="apartment" />
