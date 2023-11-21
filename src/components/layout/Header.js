@@ -22,8 +22,9 @@ function Header() {
 
       {data ? (
         <div className=" bg-white p-1 rounded-md px-2 group hover:bg-blue1 cursor-pointer">
-          <Link href="/dashboard">
-            <FaUserAlt className="text-blue1 group-hover:text-white" />
+          <Link className="flex items-center gap-1" href="/dashboard">
+            <p className="text-blue1 group-hover:text-white">حساب کاربری</p>
+            <FaUserAlt className="mb-1 text-blue1 group-hover:text-white" />
           </Link>
         </div>
       ) : (

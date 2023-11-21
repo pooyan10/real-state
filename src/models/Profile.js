@@ -43,10 +43,11 @@ const profileSchema = new Schema(
       type: [String],
       default: [],
     },
-    userId: {
+    realstateuserId: {
       type: Schema.Types.ObjectId,
-      ref: "RealStateUser",
+      ref: "Realstateuser",
     },
+
     published: {
       type: Boolean,
       default: false,

@@ -24,7 +24,7 @@ const realstateuserSchema = new Schema({
   },
 });
 
-const RealStateUser =
-  models.RealStateUser || model("RealStateUser", realstateuserSchema);
+const Realstateuser =
+  models.Realstateuser || model("Realstateuser", realstateuserSchema);
 
-export default RealStateUser;
+export default Realstateuser;

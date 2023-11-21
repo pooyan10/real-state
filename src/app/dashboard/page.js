@@ -3,12 +3,12 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import connectDB from "@/utils/connectDB";
-import RealStateUser from "@/models/RealStateUser";
+import Realstateuser from "@/models/Realstateuser";
 
 async function Dashboard() {
   await connectDB();
   const session = await getServerSession(authOptions);
-  const user = await RealStateUser.findOne({ email: session.user.email });
+  const user = await Realstateuser.findOne({ email: session.user.email });
   return <DashboardPage createdAt={user?.createdAt} />;
 }
 

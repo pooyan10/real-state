@@ -1,5 +1,5 @@
 import Profile from "@/models/Profile";
-import RealStateUser from "@/models/RealStateUser";
+import Realstateuser from "@/models/Realstateuser";
 import connectDB from "@/utils/connectDB";
 import { Types } from "mongoose";
 import { getServerSession } from "next-auth";
@@ -30,7 +30,7 @@ export async function POST(req) {
       );
     }
 
-    const user = RealStateUser.findOne({ email: session.user.email });
+    const user = Realstateuser.findOne({ email: session.user.email });
 
     if (!user) {
       return NextResponse.json(

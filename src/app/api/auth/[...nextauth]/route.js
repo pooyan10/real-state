@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
-import RealStateUser from "@/models/RealStateUser";
+import Realstateuser from "@/models/Realstateuser";
 
 export const authOptions = {
   session: { strategy: "jwt" },
@@ -19,7 +19,7 @@ export const authOptions = {
           throw new Error("لطفا اطلاعات معتبر وارد کنید");
         }
 
-        const user = await RealStateUser.findOne({ email });
+        const user = await Realstateuser.findOne({ email });
         if (!user) throw new Error("لطفا ابتدا حساب کاربری ایجاد کنید");
 
         const isValid = await verifyPassword(password, user.password);

@@ -1,5 +1,5 @@
 import Profile from "@/models/Profile";
-import RealStateUser from "@/models/RealStateUser";
+import Realstateuser from "@/models/Realstateuser";
 import connectDB from "@/utils/connectDB";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -17,7 +17,7 @@ export async function PATCH(req, context) {
       );
     }
 
-    const user = await RealStateUser.findOne({ email: session.user.email });
+    const user = await Realstateuser.findOne({ email: session.user.email });
     if (!user) {
       return NextResponse.json(
         { error: "حساب کاربری یافت نشد" },
