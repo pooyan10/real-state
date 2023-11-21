@@ -2,8 +2,8 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { FiLogIn } from "react-icons/Fi";
-import { FaUserAlt } from "react-icons/Fa";
+import { FiLogIn } from "react-icons/fi";
+import { FaUserAlt } from "react-icons/fa";
 
 function Header() {
   const { data } = useSession();

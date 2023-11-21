@@ -1,7 +1,7 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-import { FiLogOut } from "react-icons/Fi";
+import { FiLogOut } from "react-icons/fi";
 function LogoutButton() {
   return (
     <button

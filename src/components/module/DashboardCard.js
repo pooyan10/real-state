@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Card from "./Card";
-import { FiEdit } from "react-icons/Fi";
+import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import toast, { Toaster } from "react-hot-toast";
 
